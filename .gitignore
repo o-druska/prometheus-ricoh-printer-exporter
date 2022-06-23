@@ -173,4 +173,7 @@ fabric.properties
 # Ignore code-workspaces
 *.code-workspace
 
+# venvs
+.venv
+
 # End of https://www.toptal.com/developers/gitignore/api/macos,visualstudiocode,pycharm
