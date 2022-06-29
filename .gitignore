@@ -176,4 +176,7 @@ fabric.properties
 # venvs
 .venv
 
+# python binaries
+*cpython-310.pyc
+
 # End of https://www.toptal.com/developers/gitignore/api/macos,visualstudiocode,pycharm
