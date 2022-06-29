@@ -9,11 +9,13 @@ from bs4 import BeautifulSoup as bs
 
 def main():
     args = get_parsed_args()
-
+    
     try:
-        REGISTRY.register(exporter_file.RicohPrinterExporter())
+        soups = get_soups(args.insecure)
     except ConnectionError as c:
         sys.exit(c.strerror)
+    
+    REGISTRY.register(exporter_file.RicohPrinterExporter(soups=soups))
     
     if args.listenaddress is None:
         start_http_server(port=9840, addr='127.0.0.1')
@@ -25,6 +27,7 @@ def main():
             start_http_server(port=int(port))
 
     # keep the thing going indefinitely
+    print("Exporter started")
     while True:
         time.sleep(1)
 
@@ -38,9 +41,10 @@ def get_soups(insec_bool):
     soups = []
 
     for url in urls:
+        
         r_url = requests.get(url, verify = not insec_bool)
         if r_url.status_code != 200:
-            raise ConnectionError("Something's wrong with the Website:\n" + url_oak + "\n" + str(r_url.status_code))
+            raise ConnectionError("Something's wrong with the Website:\n" + r_url + "\n" + str(r_url.status_code))
         soups.append(bs(r_url.text, 'html.parser'))
 
     return soups

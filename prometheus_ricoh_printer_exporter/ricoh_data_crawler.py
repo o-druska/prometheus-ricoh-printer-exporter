@@ -10,7 +10,6 @@ class Printer_Values:
     level_cyan: float
     level_magenta: float
     level_yellow: float
-    paper_stuck: bool
 
 def get_fill_percent(tag):
     SINGLE_GRAPHIC_CONSTANT = 100/160   # Toner level needs to be parsed by examining the amount of graphical elements
@@ -18,16 +17,19 @@ def get_fill_percent(tag):
     fill_percent = float(tag['width']) * SINGLE_GRAPHIC_CONSTANT   # tag['width'] is the amount of graphic units (s.a.) displayed
     return fill_percent
 
-def get_printer_values(soup):
-    tag_list = soup.find_all("img", class_="ver-algn-m mgn-R5p bdr-1px-666", attrs='width')
+def get_printer_values(soups):
+    for soup in soups:
+        tag_list = soup.find_all("img", class_="ver-algn-m mgn-R5p bdr-1px-666", attrs='width')
 
-    return Printer_Values(
-        level_black = float(get_fill_percent(tag_list[0])),
-        level_cyan = float(get_fill_percent(tag_list[1])),
-        level_magenta = float(get_fill_percent(tag_list[2])),
-        level_yellow = float(get_fill_percent(tag_list[3]))
-    )
+        yield Printer_Values(
+            level_black = float(get_fill_percent(tag_list[0])),
+            level_cyan = float(get_fill_percent(tag_list[1])),
+            level_magenta = float(get_fill_percent(tag_list[2])),
+            level_yellow = float(get_fill_percent(tag_list[3]))
+        )
 
+
+'''
 def test_main():
     url_oak = "http://oak.inm7.de/web/guest/en/websys/webArch/getStatus.cgi"
     r_oak = requests.get(url_oak, verify=False)
@@ -44,3 +46,4 @@ def test_main():
 
 if __name__ == '__main__':
     test_main()
+'''
