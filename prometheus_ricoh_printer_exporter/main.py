@@ -1,3 +1,9 @@
+# This file is licensed under the ISC license.
+# Oskar Druska 2022
+# For further information look up LICENSE.txt
+
+# Exporter entry point; handles URLs and BeautifulSoup objects
+
 import sys
 import argparse
 import time

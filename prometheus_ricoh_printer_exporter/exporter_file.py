@@ -1,3 +1,9 @@
+# This file is licensed under the ISC license.
+# Oskar Druska 2022
+# For further information look up LICENSE.txt
+
+# Exporter file; produces Prometheus metrics using the crawled printer values from ricoh_data_cralwer.py
+
 from prometheus_client import Summary
 from prometheus_client.core import GaugeMetricFamily
 

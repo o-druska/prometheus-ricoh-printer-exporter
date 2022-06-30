@@ -1,4 +1,7 @@
-#!/usr/bin/env python3
+# This file is licensed under the ISC license.
+# Oskar Druska 2022
+# For further information look up LICENSE.txt
+
 # This will be the script that yields the needed information and "talks" to the printers
 import re
 from bs4 import BeautifulSoup as bs
