@@ -1,21 +1,29 @@
 import sys
 import argparse
 import time
-from urllib import request
-import requests 
+import requests
+from bs4 import BeautifulSoup as bs
 from prometheus_client import start_http_server, REGISTRY
 import exporter_file
-from bs4 import BeautifulSoup as bs
 
 def main():
+    url_oak = "http://oak.inm7.de/web/guest/en/websys/webArch/getStatus.cgi"
+    url_pine = "http://pine.inm7.de/web/guest/en/websys/webArch/getStatus.cgi"
+    url_willow = "http://willow.inm7.de/web/guest/de/websys/webArch/getStatus.cgi"
+    url_larch = "http://larch.inm7.de/web/guest/de/websys/webArch/getStatus.cgi"
+
+    urls = [url_oak, url_pine, url_willow, url_larch]
+
     args = get_parsed_args()
-    
+    print("parsed args: " + str(args))
+
     try:
-        soups = get_soups(args.insecure)
+        soups = get_soups(urls, args.insecure)
+        print("Cooked soups!")
     except ConnectionError as c:
         sys.exit(c.strerror)
     
-    REGISTRY.register(exporter_file.RicohPrinterExporter(soups=soups))
+    REGISTRY.register(exporter_file.RicohPrinterExporter(soups=soups, urls=urls))
     
     if args.listenaddress is None:
         start_http_server(port=9840, addr='127.0.0.1')
@@ -27,21 +35,19 @@ def main():
             start_http_server(port=int(port))
 
     # keep the thing going indefinitely
-    print("Exporter started")
+    print("Exporter started!")
     while True:
         time.sleep(1)
 
-def get_soups(insec_bool):
-    url_oak = "http://oak.inm7.de/web/guest/en/websys/webArch/getStatus.cgi"
-    url_pine = "http://pine.inm7.de/web/guest/en/websys/webArch/getStatus.cgi"
-    url_willow = "http://willow.inm7.de/web/guest/de/websys/webArch/getStatus.cgi"
-    url_larch = "http://larch.inm7.de/web/guest/de/websys/webArch/getStatus.cgi"
-
-    urls = [url_oak, url_pine, url_willow, url_larch]
+def get_soups(urls : list, insec_bool : bool):
+    '''
+    Returns a list containing a soup obejct for each printer in urls.
+    '''
     soups = []
 
     for url in urls:
-        
+        print("Connecting to: " + url + " ...")
+
         r_url = requests.get(url, verify = not insec_bool)
         if r_url.status_code != 200:
             raise ConnectionError("Something's wrong with the Website:\n" + r_url + "\n" + str(r_url.status_code))
@@ -51,6 +57,8 @@ def get_soups(insec_bool):
 
 
 def get_parsed_args():
+    '''argparser; returns the args from command line'''
+
     parser = argparse.ArgumentParser(
         description='Set up the Prometheus exporter (connection ports)')
     mutual_group = parser.add_mutually_exclusive_group()
