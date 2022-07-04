@@ -26,27 +26,32 @@ class RicohPrinterExporter:
         printer_generator = ricoh.get_printer_values(self.soups, self.urls)
 
         for printer in printer_generator:
+            labels = ['printer_name', 'color']
 
             g = GaugeMetricFamily(
-                name='ricoh_printer_level_black',
+                name='ricoh_printer_level_percent',
+                labels=labels,
                 documentation='black toner level in percent')
-            g.add_metric([printer.printer_name], printer.level_black)
+            g.add_metric([printer.printer_name, 'black'], printer.level_black)
             yield g
 
             g = GaugeMetricFamily(
-                name='ricoh_printer_level_cyan',
+                name='ricoh_printer_level_percent',
+                labels=labels,
                 documentation='cyan toner level in percent')
-            g.add_metric([printer.printer_name], printer.level_cyan)
+            g.add_metric([printer.printer_name, 'cyan'], printer.level_cyan)
             yield g
 
             g = GaugeMetricFamily(
-                name='ricoh_printer_level_magenta',
-                documentation=',magenta toner level in percent')
-            g.add_metric([printer.printer_name], printer.level_magenta)
+                name='ricoh_printer_level_percent',
+                labels=labels,
+                documentation='magenta toner level in percent')
+            g.add_metric([printer.printer_name, 'magenta'], printer.level_magenta)
             yield g
 
             g = GaugeMetricFamily(
-                name='ricoh_printer_level_yellow',
+                name='ricoh_printer_level_percent',
+                labels=labels,
                 documentation='yellow toner level in percent')
-            g.add_metric([printer.printer_name], printer.level_yellow)
+            g.add_metric([printer.printer_name, 'yellow'], printer.level_yellow)
             yield g
