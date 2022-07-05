@@ -180,3 +180,9 @@ fabric.properties
 *cpython-310.pyc
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,visualstudiocode,pycharm
+prometheus_ricoh_printer_exporter.egg-info/entry_points.txt
+prometheus_ricoh_printer_exporter.egg-info/PKG-INFO
+prometheus_ricoh_printer_exporter.egg-info/dependency_links.txt
+prometheus_ricoh_printer_exporter.egg-info/requires.txt
+prometheus_ricoh_printer_exporter.egg-info/SOURCES.txt
+prometheus_ricoh_printer_exporter.egg-info/top_level.txt
