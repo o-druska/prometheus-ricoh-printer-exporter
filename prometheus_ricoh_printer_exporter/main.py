@@ -10,7 +10,7 @@ import time
 import requests
 from bs4 import BeautifulSoup as bs
 from prometheus_client import start_http_server, REGISTRY
-import exporter_file
+from . import exporter_file
 
 def main():
     url_oak = "http://oak.inm7.de/web/guest/en/websys/webArch/getStatus.cgi"

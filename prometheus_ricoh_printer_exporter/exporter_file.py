@@ -7,7 +7,7 @@
 from prometheus_client import Summary
 from prometheus_client.core import GaugeMetricFamily
 
-import ricoh_data_crawler as ricoh
+from . import ricoh_data_crawler as ricoh
 
 REQUEST_TIME = Summary("ricoh_printer_exporter_collect_",
                        "Time spent to collect metrics from ricoh_data_crawler.py")
