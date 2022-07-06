@@ -23,7 +23,7 @@ class RicohPrinterExporter:
     @REQUEST_TIME.time()
     def collect(self):
 
-        printer_generator = ricoh.get_printer_values(self.soups, self.urls)
+        printer_generator = ricoh.get_printer_values(self.soups, self.urls) # returns a Printer_Values object in each generator call
 
         for printer in printer_generator:
             labels = ['printer_name', 'color']

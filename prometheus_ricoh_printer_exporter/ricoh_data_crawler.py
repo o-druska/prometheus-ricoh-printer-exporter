@@ -36,7 +36,7 @@ def get_printer_values(soups : list, urls: list):
     '''
 
     for (soup, url) in zip(soups, urls):
-        tag_list = soup.find_all("img", class_="ver-algn-m mgn-R5p bdr-1px-666", attrs='width')
+        tag_list = soup.find_all("img", class_="ver-algn-m mgn-R5p bdr-1px-666", attrs='width') # html-tags related to toner levels
 
         yield Printer_Values(
             printer_name = re.findall(r"(\w*.inm7.de)", url)[0],    # takes the url and scrapes the ip address from it,
