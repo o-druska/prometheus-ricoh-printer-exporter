@@ -28,6 +28,8 @@ def main():
         print("Cooked soups!")
     except ConnectionError as c:
         sys.exit(c.strerror)
+    except TimeoutError as t:
+        sys.exit(t.strerror)
     
     REGISTRY.register(exporter_file.RicohPrinterExporter(soups=soups, urls=urls))
     
