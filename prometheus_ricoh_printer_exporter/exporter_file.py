@@ -12,9 +12,10 @@ from . import ricoh_data_crawler as ricoh
 REQUEST_TIME = Summary("ricoh_printer_exporter_collect_",
                        "Time spent to collect metrics from ricoh_data_crawler.py")
 
+
 class RicohPrinterExporter:
     soups: list
-    urls : list
+    urls: list
 
     def __init__(self, soups, urls) -> None:
         self.soups = soups
@@ -23,7 +24,7 @@ class RicohPrinterExporter:
     @REQUEST_TIME.time()
     def collect(self):
 
-        printer_generator = ricoh.get_printer_values(self.soups, self.urls) # returns a Printer_Values object in each generator call
+        printer_generator = ricoh.get_printer_values(self.soups, self.urls)  # returns a Printer_Values object in each generator call
 
         for printer in printer_generator:
             labels = ['printer_name', 'color']
