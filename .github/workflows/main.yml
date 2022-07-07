@@ -30,4 +30,4 @@ jobs:
         
     - name: flake8 linting
       run: |
-        flake8 $(find . -type f -name "*.py")
+        flake8 $(find ./prometheus_ricoh_printer_exporter -type f -name "*.py")
