@@ -1,8 +1,6 @@
 # prometheus-ricoh-printer-exporter
 Building a prometheus exporter for ricoh-printer related information like toner level
 
-## Exporter still under development
-
 ## Install
 You can install the exporter from this repository using the following command:
 `pip install git+https://github.com/o-druska/prometheus-ricoh-printer-exporter.git`
