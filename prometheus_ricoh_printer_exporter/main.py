@@ -8,12 +8,15 @@ import sys
 import argparse
 import time
 import requests
+import logging
 from bs4 import BeautifulSoup as bs
 from prometheus_client import start_http_server, REGISTRY
 from . import exporter_file
 
 
 def main():
+    logging.basicConfig(format='%(asctime)s %(message)s', level=logging.INFO)
+
     url_oak = "http://oak.inm7.de/web/guest/en/websys/webArch/getStatus.cgi"
     url_pine = "http://pine.inm7.de/web/guest/en/websys/webArch/getStatus.cgi"
     url_willow = "http://willow.inm7.de/web/guest/de/websys/webArch/getStatus.cgi"
@@ -25,11 +28,14 @@ def main():
 
     try:
         soups = get_soups(urls, args.insecure)
-        print("Cooked soups!")
-    except ConnectionError as c:
+    except ConnectionError as c:  # raised, if request doesn't return HTML code 200
+        logging.error(c)
         sys.exit(c.strerror)
     except TimeoutError as t:
+        logging.error(t)
         sys.exit(t.strerror)
+
+    logging.info('Cooked soups!')
 
     REGISTRY.register(exporter_file.RicohPrinterExporter(soups=soups, urls=urls))
 
@@ -43,19 +49,18 @@ def main():
             start_http_server(port=int(port))
 
     # keep the thing going indefinitely
-    print("Exporter started!")
+    logging.info("Exporter started!")
     while True:
         time.sleep(1)
 
 
 def get_soups(urls: list, insec_bool: bool):
-    '''
-    Returns a list containing a soup obejct for each printer in urls.
-    '''
+    '''Returns a list containing a soup obejct for each printer in urls.'''
+
     soups = []
 
     for url in urls:
-        print("Connecting to: " + url + " ...")
+        logging.info("Connecting to: " + url + " ...")
 
         r_url = requests.get(url, verify=not insec_bool)
         if r_url.status_code != 200:
