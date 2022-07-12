@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='prometheus_ricoh_printer_exporter',
-    version='0.3.0',
+    version='0.4.0',
     description='prometheus exporter for printer status for INM7s Ricoh printers',
     author='Oskar Druska',
     author_email='o.druska@fz-juelich.de',
