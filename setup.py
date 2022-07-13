@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-''' setup file for installation of fzj_weather prometheus exporter '''
+''' setup file for installation of ricoh printer prometheus exporter '''
 from setuptools import setup, find_packages
 
 setup(
